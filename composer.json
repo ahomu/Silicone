@@ -1,0 +1,24 @@
+{
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "pornel/PHPTAL",
+                "version": "1.2.2",
+                "dist": {
+                    "url": "http://phptal.org/files/PHPTAL-1.2.2.zip",
+                    "type": "zip"
+                },
+                "source": {
+                    "url": "https://github.com/pornel/PHPTAL.git",
+                    "type": "git",
+                    "reference": "Release 1.2.2"
+                }
+            }
+        }
+    ],
+    "require": {
+        "brtriver/PHPTALServiceProvider": "dev-master",
+        "pornel/PHPTAL": "1.2.2"
+    }
+}
