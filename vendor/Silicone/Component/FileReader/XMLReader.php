@@ -129,7 +129,7 @@ class XMLReader implements FileReaderInterface
     }
 
     /**
-     * Alias of native XMLReader.
+     * Alias of original XMLReader.
      *
      * @param string $method
      * @param array $args

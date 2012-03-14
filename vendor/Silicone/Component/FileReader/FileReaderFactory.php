@@ -20,7 +20,7 @@ class FileReaderFactory
      * @return bool|\Silicone\Component\FileReader\FileReaderInterface
      * @throws \Exception
      */
-    public function load($filePath, $type = '')
+    public function call($filePath, $type = '')
     {
         if (!is_readable($filePath)) {
             throw new \Exception('is not readable');

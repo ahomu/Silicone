@@ -37,14 +37,22 @@ class ActionControllerCollection
 
     /**
      * Register specified domain's ActionController.
+     * If ConrollerProvider exists in the domain, when Provider will be autoloaing.
      *
-     * @param $domainName
+     * @param string $domainName
+     * @param string $mountPath
      * @return void
      */
-    public function import($domainName)
+    public function import($domainName, $mountPath = '')
     {
         $this->app->autoloader->registerNamespace($domainName, DIR_DOMAINS);
-        $this->namespaces[$domainName] = new ActionController($domainName);
+        $this->namespaces[$domainName] = new ActionController($domainName, $this->app);
+
+        $controllerName = $domainName.'\\ControllerProvider';
+        if (class_exists($controllerName)) {
+            $mountPath = $mountPath ? $mountPath : '/'.$domainName;
+            $this->app->mount($mountPath, new $controllerName());
+        }
     }
 
     /**

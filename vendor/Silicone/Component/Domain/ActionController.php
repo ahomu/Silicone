@@ -2,7 +2,7 @@
 
 namespace Silicone\Component\Domain;
 
-class ActionController extends Action
+class ActionController
 {
     /**
      * @var string $_domainName
@@ -10,13 +10,20 @@ class ActionController extends Action
     private $_domainName;
 
     /**
+     * @var \Silicone\Application $_app
+     */
+    private $_app;
+
+    /**
      * Constructor
      *
      * @param $domainName
+     * @param \Silicone\Application $app
      */
-    public function __construct($domainName)
+    public function __construct($domainName, $app)
     {
         $this->_domainName = $domainName;
+        $this->_app        = $app;
     }
 
     /**
@@ -33,9 +40,10 @@ class ActionController extends Action
      * Traversal & get Action's instance.
      *
      * @param string $path
-     * @return bool|\Silicone\Component\Domain\Action
+     * @param array $params
+     * @return bool|mixed
      */
-    public function action($path)
+    public function action($path, $params = array())
     {
         $path = $this->_domainName.'.'.trim($path, '.');
 
@@ -44,7 +52,13 @@ class ActionController extends Action
         }, explode('.', $path)));
 
         if (class_exists($className)) {
-            return new $className();
+            /**
+             * @var \Silicone\Component\Domain\Action $action
+             */
+            $action = new $className();
+            if ($action instanceof Action) {
+                return $action->boot($params, $this->_app);
+            }
         }
 
         return false;
