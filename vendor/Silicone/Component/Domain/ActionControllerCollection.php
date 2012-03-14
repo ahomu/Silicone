@@ -25,32 +25,21 @@ class ActionControllerCollection
     }
 
     /**
-     * Alias to 'call' method.
-     *
-     * @param $prop
-     * @return bool|ActionController
-     */
-    public function __get($prop)
-    {
-        return $this->call($prop);
-    }
-
-    /**
      * Register specified domain's ActionController.
      * If ConrollerProvider exists in the domain, when Provider will be autoloaing.
      *
-     * @param string $domainName
-     * @param string $mountPath
-     * @return void
+     * @param string $domainName Functional domain namespace.
+     * @param string $mountPath  Mount path for ControllerProvider.
      */
     public function import($domainName, $mountPath = '')
     {
+        $domainName = ucwords(strtolower($domainName));
         $this->app->autoloader->registerNamespace($domainName, DIR_DOMAINS);
         $this->namespaces[$domainName] = new ActionController($domainName, $this->app);
 
         $controllerName = $domainName.'\\ControllerProvider';
         if (class_exists($controllerName)) {
-            $mountPath = $mountPath ? $mountPath : '/'.$domainName;
+            $mountPath = $mountPath ? $mountPath : '/'.strtolower($domainName);
             $this->app->mount($mountPath, new $controllerName());
         }
     }
@@ -58,11 +47,12 @@ class ActionControllerCollection
     /**
      * Call specified domain's ActionController.
      *
-     * @param $domainName
-     * @return bool|ActionController
+     * @param string $domainName
+     * @return bool|\Silicone\Component\Domain\ActionController
      */
     public function call($domainName)
     {
+        $domainName = ucwords(strtolower($domainName));
         return isset($this->namespaces[$domainName]) ? $this->namespaces[$domainName] : false;
     }
 }

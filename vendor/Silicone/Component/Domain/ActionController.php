@@ -17,7 +17,7 @@ class ActionController
     /**
      * Constructor
      *
-     * @param $domainName
+     * @param string $domainName
      * @param \Silicone\Application $app
      */
     public function __construct($domainName, $app)
@@ -29,7 +29,7 @@ class ActionController
     /**
      * toString when get domain name.
      *
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {

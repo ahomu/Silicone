@@ -5,9 +5,9 @@ $config = array(
     'urlgen' => true,
     'file'   => true,
 
-    'phptal' => array(
-        'phptal.class_path' => DIR_VENDOR.'pornel/PHPTAL',
-    ),
+//    'phptal' => array(
+//        'phptal.class_path' => DIR_VENDOR.'pornel/PHPTAL',
+//    ),
 
     'cache'  => false && array(
         'cache_dir' => DIR_ROOT.'cache/',

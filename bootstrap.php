@@ -12,10 +12,12 @@ define('DIR_TEMPLATES',DIR_ROOT.'templates/');
 
 require DIR_ROOT.'silex.phar';
 require DIR_VENDOR.'Silicone/Application.php';
-require DIR_VENDOR.'brtriver/PHPTALServiceProvider/PHPTALServiceProvider.php';
+//require DIR_VENDOR.'brtriver/PHPTALServiceProvider/PHPTALServiceProvider.php';
 
 function d($a) {
     echo '<pre>';
+    ob_start();
     var_dump($a);
+    echo htmlspecialchars(ob_get_clean(), ENT_QUOTES, 'UTF-8');
     echo '</pre>';
 }

@@ -6,21 +6,26 @@ Silicone is a framework wrapped around a thin layer of Silex.
 ###app.php
 
     <?php
+
     require dirname(__FILE__).'/bootstrap.php';
     require dirname(__FILE__).'/config.php';
 
     use Silicone\Application;
+    use Symfony\Component\HttpFoundation\Request;
 
     $app = new Application($config);
-    $app->domain->import('Sample');
 
     /*
-    * Write here your presentation logic for web request.
-    * You can include other php file which wrote any logic.
-    */
-    $app->get('/', function (Application $app) {
+     * Write here your presentation logic for web request.
+     * You can include other php file which wrote any logic.
+     */
+    $app->domain->import('Sample');
 
-        return 'hogehoge fugafuga.';
+    $app->get('/', function (Request $req, Application $app) {
+
+        $sample = $app->domain->call('Sample');
+
+        return $sample->action('test');
     });
 
 ###public/index.php
