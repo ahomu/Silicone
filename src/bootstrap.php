@@ -18,6 +18,7 @@ function d($a) {
     echo '<pre>';
     ob_start();
     var_dump($a);
-    echo htmlspecialchars(ob_get_clean(), ENT_QUOTES, 'UTF-8');
+    $out = ob_get_clean();
+    echo htmlspecialchars($out, ENT_QUOTES, 'UTF-8');
     echo '</pre>';
 }
