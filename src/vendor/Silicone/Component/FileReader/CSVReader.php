@@ -9,18 +9,51 @@ namespace Silicone\Component\FileReader;
  */
 class CSVReader implements FileReaderInterface
 {
+    /**
+     * @var resource
+     */
+    private $_pointer;
+
+    /**
+     * Load CSV file, and keep the file pointer.
+     *
+     * @param string $filePath
+     */
     public function load($filePath)
     {
-
+        $this->_pointer = fopen($filePath, 'r');
     }
 
-    public function dig($context)
+    /**
+     * Moving pointer to number of row.
+     *
+     * @param int $context
+     * @param bool $reqind
+     * @return bool
+     */
+    public function dig($context, $reqind = false)
     {
+        if (!!$reqind) {
+            rewind($this->_pointer);
+        }
 
+        $i = 0;
+        for (; $i < $context; $i++) {
+            if (false === fgets($this->_pointer) ) {
+                break;
+            }
+        }
+
+        return feof($this->_pointer) ? false : true;
     }
 
+    /**
+     * Get a data of row as array.
+     *
+     * @return array|bool
+     */
     public function fetch()
     {
-
+        return fgetcsv($this->_pointer);
     }
 }
