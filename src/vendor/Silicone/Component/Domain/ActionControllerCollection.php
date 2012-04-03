@@ -33,6 +33,10 @@ class ActionControllerCollection
      */
     public function import($domainName, $mountPath = '')
     {
+        if (isset($this->namespaces[$domainName])) {
+            throw new \Exception('Already imoprted domain was specified. You can not import twice.');
+        }
+
         $domainName = ucwords(strtolower($domainName));
         $this->app->autoloader->registerNamespace($domainName, DIR_DOMAINS);
         $this->namespaces[$domainName] = new ActionController($domainName, $this->app);

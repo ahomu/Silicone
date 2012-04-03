@@ -141,7 +141,7 @@ class XMLReader implements FileReaderInterface
         if (method_exists($this->_pointer, $method)) {
             return call_user_func(array($this->_pointer, $method), $args);
         } else {
-            throw new \Exception('method is not exists');
+            throw new \Exception('Method is not exists.');
         }
     }
 }
