@@ -56,6 +56,15 @@ class HandlerTestSilicone extends \PHPUnit_Extensions_Database_TestCase
         $this->subject->query('INSERT INTO `none` VALUES(6, "six")', 'exec');
     }
 
+    public function testPrepare()
+    {
+        $stmt = $this->subject->prepare('SELECT * FROM `test` WHERE `id`%2 = 0');
+        $this->assertInstanceOf('\\Silicone\\Component\\Database\\Statement', $stmt);
+
+        $stmt->execute();
+        $this->assertCount(2, $stmt->fetchAll());
+    }
+
     public function testGetPDO()
     {
         $this->assertInstanceOf('PDO', $this->subject->getPDO());

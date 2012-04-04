@@ -35,8 +35,11 @@ class Handler
         $this->_fetches= array();
 
         /* @var \PDO $connection */
-        $this->_pdo = new PDO($this->_dsn, $this->_user, $this->_passwd);
+        $this->_pdo = new PDO($this->_dsn, $this->_user, $this->_passwd, array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"
+        ));
         $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->_pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
 
     /**
@@ -48,14 +51,15 @@ class Handler
      */
     public function query($sql, $opt = 'all')
     {
-        $stmt = $this->_createStatement($sql);
+        $stmt = $this->_wrapStatement($this->_pdo->query($sql));
         $res  = null;
+
         switch ($opt) {
             case 'all'  :
-                $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $res = $stmt->fetchAll();
                 break;
             case 'row'  :
-                $res = $stmt->fetch(PDO::FETCH_ASSOC);
+                $res = $stmt->fetch();
                 break;
             case 'one'  :
                 $res = $stmt->fetchColumn(0);
@@ -74,12 +78,15 @@ class Handler
     }
 
     /**
+     * Get prepared statement.
+     *
      * @param string $sql
+     * @param array $options
      * @return \Silicone\Component\Database\Statement
      */
-    private function _createStatement($sql)
+    public function prepare($sql, $options = array())
     {
-        return new Statement($this->_pdo->query($sql));
+        return $this->_wrapStatement($this->_pdo->prepare($sql, $options));
     }
 
     /**
@@ -88,5 +95,14 @@ class Handler
     public function getPDO()
     {
         return $this->_pdo;
+    }
+
+    /**
+     * @param \PDOStatement $stmt
+     * @return \Silicone\Component\Database\Statement
+     */
+    private function _wrapStatement($stmt)
+    {
+        return new Statement($stmt);
     }
 }
