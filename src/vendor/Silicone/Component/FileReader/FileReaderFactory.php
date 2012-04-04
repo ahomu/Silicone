@@ -9,7 +9,8 @@ namespace Silicone\Component\FileReader;
  */
 class FileReaderFactory
 {
-    private $_readerCollection = array();
+    /** @var array */
+    private $_readerCollection;
 
     /**
      * Detecting file type and load.

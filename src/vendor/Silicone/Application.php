@@ -84,6 +84,11 @@ class Application extends \Silex\Application
         if (!empty($config['db'])) {
             $this->register(new DatabaseServiceProvider(), $config['db']);
         }
+
+        // FileReader ['file_reader']
+        if (!empty($config['file_reader'])) {
+            $this->register(new FileReaderServiceProvider());
+        }
     }
 
     /**

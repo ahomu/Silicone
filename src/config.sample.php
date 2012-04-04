@@ -3,7 +3,7 @@
 $config = array(
     'debug'  => true,
     'urlgen' => true,
-    'file'   => true,
+    'file_reader' => true,
 
 //    'phptal' => array(
 //        'phptal.class_path' => DIR_VENDOR.'pornel/PHPTAL',

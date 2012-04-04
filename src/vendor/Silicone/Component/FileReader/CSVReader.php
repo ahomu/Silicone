@@ -28,12 +28,12 @@ class CSVReader implements FileReaderInterface
      * Moving pointer to number of row.
      *
      * @param int $context
-     * @param bool $reqind
+     * @param bool $rewind
      * @return bool
      */
-    public function dig($context, $reqind = false)
+    public function dig($context, $rewind = false)
     {
-        if (!!$reqind) {
+        if (!!$rewind) {
             rewind($this->_pointer);
         }
 
