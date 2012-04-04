@@ -1,7 +1,7 @@
 <?php
 
 require dirname(__FILE__).'/bootstrap.php';
-require dirname(__FILE__).'/config.php';
+require dirname(__FILE__).'/config'.(defined('TEST_RUNNER') && !!TEST_RUNNER ? '.test' : '' ).'.php';
 
 use Silicone\Application;
 use Symfony\Component\HttpFoundation\Request;

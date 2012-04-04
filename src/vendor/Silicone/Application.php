@@ -35,7 +35,7 @@ use Silicone\Provider\FileReaderServiceProvider;
  * @property \Symfony\Component\HttpFoundation\Session\Storage\NativeFileSessionStorage $session
  *
  * @property \Silicone\Component\Domain\ActionControllerCollection                      $domain @todo issue: ServiceProviderにする
- * @property \Silicone\Component\Database\Flyweight                                     $db
+ * @property \Silicone\Component\Database\HandlerFactory                                $db
  * @property \Silicone\Component\FileReader\FileReaderFactory                           $file_reader
  */
 class Application extends \Silex\Application

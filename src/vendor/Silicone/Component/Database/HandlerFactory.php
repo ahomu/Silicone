@@ -2,7 +2,7 @@
 
 namespace Silicone\Component\Database;
 
-class Flyweight
+class HandlerFactory
 {
     private $_connections = array();
 
@@ -18,10 +18,10 @@ class Flyweight
     }
 
     /**
-     * Call PDO.
+     * Call PDO Wrapper.
      *
      * @param string $id
-     * @return \PDO
+     * @return \Silicone\Component\Database\Handler
      */
     public function call($id = '__default__')
     {
@@ -40,15 +40,9 @@ class Flyweight
      * @param array  $config
      * @param string $id
      */
-    public function connect($config, $id)
+    protected function connect($config, $id)
     {
-        $dsn    = $config['engine'].':dbname='.$config['name'].';host='.$config['host'];
-        $user   = $config['user'];
-        $passwd = $config['passwd'];
-
-        /* @var \PDO $connection */
-        $connection = $this->_connections[$id] = new \PDO($dsn, $user, $passwd);
-        $connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $this->_connections[$id] = new Handler($config);
     }
 
     /**
@@ -57,7 +51,7 @@ class Flyweight
      * @param array  $config
      * @param string $id
      */
-    public function preserve($config, $id)
+    protected function preserve($config, $id)
     {
         $this->_connections[$id] = $config;
     }

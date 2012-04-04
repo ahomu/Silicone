@@ -5,7 +5,7 @@ namespace Silicone\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
-use Silicone\Component\Database\Flyweight;
+use Silicone\Component\Database\HandlerFactory;
 
 /**
  * Silicone Database component Provider.
@@ -17,7 +17,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['db'] = $app->share(function () use ($app) {
-            return new Flyweight($app['db.config']);
+            return new HandlerFactory($app['db.config']);
         });
     }
 }
