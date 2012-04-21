@@ -94,13 +94,13 @@ class Application extends \Silex\Application
     /**
      * Application running from web requests.
      *
-     * @param null|\Symfony\Component\HttpFoundation\Request $req
+     * @param null|\Symfony\Component\HttpFoundation\Request $request
      */
-    public function run($req = null)
+    public function run(Request $request = null)
     {
-        $req = (null === $req) ? Request::createFromGlobals() : $req;
+        $request = (null === $request) ? Request::createFromGlobals() : $request;
 
-        $this->handle($req)->send();
+        $this->handle($request)->send();
     }
 
     /**
